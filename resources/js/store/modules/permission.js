@@ -17,8 +17,8 @@ function hasPermission(permissions, route) {
  */
 export function filterAsyncRoutes(routes, permissions, childMap) {
   return routes.filter(r => {
-    if (hasPermission(permissions, r)){
-      if (r.children && r.children.length){
+    if (hasPermission(permissions, r)) {
+      if (r.children && r.children.length) {
         r.children = filterAsyncRoutes(r.children, childMap[r.path + r.name]);
       }
       return true
@@ -61,6 +61,8 @@ const mutations = {
     routePaths.push('/401')
     routePaths.push('/')
     routePaths.push('/dashboard')
+    routePaths.push('/redirect/dashboard')
+    console.log(routes);
     state.routePaths = routePaths;
   }
 }
@@ -73,7 +75,7 @@ const actions = {
         accessedRoutes = asyncRoutes || []
       } else {
         const childMap = {};
-        for (const p of permissions){
+        for (const p of permissions) {
           childMap[p.path + p.name] = p.children;
         }
         console.log(childMap);
